@@ -575,6 +575,8 @@ def clone_container():
                     out = lxc.clone(orig=orig, new=name, snapshot=snapshot)
                 except lxc.ContainerAlreadyExists:
                     flash(u'The Container %s already exists!' % name, 'error')
+                except lxc.ContainerAlreadyRunning:
+                    flash(u'The Container %s must be stopped before cloning!' % orig, 'error')
                 except subprocess.CalledProcessError:
                     flash(u'Can\'t snapshot a directory', 'error')
 

@@ -67,6 +67,7 @@ def clone(orig=None, new=None, snapshot=False):
     '''
     if orig and new:
         if exists(new): raise ContainerAlreadyExists('Container {} already exist!'.format(new))
+        if orig not in stopped(): raise ContainerAlreadyRunning('Cannot clone running container {}!'.format(orig))
 
         command = 'lxc-clone -o {} -n {}'.format(orig, new)
         if snapshot: command += ' -s'
